@@ -19,4 +19,8 @@ pub struct HolarchyRoot<'info> {
 
 pub fn handle_initialize_root_holon(ctx: Context<HolarchyRoot>, holarchy_metadata: HolarchyMetadata ) -> Result<()> {
     let holarchy = &mut ctx.accounts.holarchy;
+
+    holarchy.new(holarchy_metadata)?;
+
+    Ok(())
 }
