@@ -11,9 +11,9 @@ pub use crate::state::state::*;
 security_txt! {
     name: "Holonic Futarchy Program",
     project_url: "",
-    contacts: "email:---@protonmail.com",
+    contacts: "email:solanacryptodev@protonmail.com",
     policy: "",
-    source_code: "https://github.com/",
+    source_code: "https://github.com/solanacryptodev/holonic-futarchy/",
     source_release: "v0",
     auditors: "None",
     acknowledgements: ""
@@ -31,12 +31,11 @@ pub mod holonic_futarchy {
         Ok(())
     }
 
-    pub fn initialize_holon(ctx: Context<Initialize>) -> Result<()> {
+    /// Creates a new holon
+    pub fn create_holon(ctx: Context<CreateHolon>, holon_metadata: HolonMetadata) -> Result<()> {
+        handle_create_holon(ctx, holon_metadata)?;
         Ok(())
     }
 
 
 }
-
-#[derive(Accounts)]
-pub struct Initialize {}

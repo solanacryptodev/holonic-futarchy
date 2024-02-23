@@ -1,12 +1,12 @@
 [package]
-name = "holonic-futarchy"
+name = "conditional_vault"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "holonic_futarchy"
+name = "conditional_vault"
 
 [features]
 no-entrypoint = []
@@ -16,9 +16,6 @@ cpi = ["no-entrypoint"]
 default = []
 
 [dependencies]
-anchor-lang = "0.29.0"
-anchor-spl = "0.29.0"
-solana-program = "~1.16.1"
+anchor-lang = "0.28.0"
+anchor-spl = "0.28.0"
 solana-security-txt = "1.1.1"
-autocrat_v0 = { path = "../autocrat_v0", features = ["cpi"]}
-coral-multisig = { path = "../multisig", features = ["cpi"]}
