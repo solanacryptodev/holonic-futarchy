@@ -1,22 +1,22 @@
 use anchor_lang::prelude::*;
-use crate::DAOHolon;
+use crate::Holarchy;
 use crate::state::state::HolarchyMetadata;
 
 #[derive(Accounts)]
-pub struct RootHolon<'info> {
+pub struct HolarchyRoot<'info> {
     #[account(
     init,
     payer = owner,
-    space = 8 + DAOHolon::MAX_SIZE,
-    seeds = [GameData::SEED.as_bytes(), owner.key().as_ref()],
+    space = 8 + Holarchy::MAX_SIZE,
+    seeds = [Holarchy::SEED.as_bytes()],
     bump
     )]
-    pub dao_holon: Account<'info, DAOHolon>,
+    pub holarchy: Account<'info, Holarchy>,
     #[account(mut)]
     pub owner: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
-pub fn handle_initialize_root_holon(ctx: Context<RootHolon>, holarchy_metadata: HolarchyMetadata ) -> Result<()> {
-
+pub fn handle_initialize_root_holon(ctx: Context<HolarchyRoot>, holarchy_metadata: HolarchyMetadata ) -> Result<()> {
+    let holarchy = &mut ctx.accounts.holarchy;
 }
