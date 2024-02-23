@@ -17,4 +17,8 @@ default = []
 
 [dependencies]
 anchor-lang = "0.29.0"
+anchor-spl = "0.29.0"
+solana-program = "~1.16.1"
 solana-security-txt = "1.1.1"
+autocrat_v0 = { path = "../autocrat_v0", features = ["cpi"]}
+coral-multisig = { path = "../multisig", features = ["cpi"]}
