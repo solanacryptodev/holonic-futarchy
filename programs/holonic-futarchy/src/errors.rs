@@ -8,4 +8,10 @@ pub enum HolonicFutarchyErrors {
     /// Not a Multisig
     #[msg("You need a multisig.")]
     NotMultisig,
+    /// Not a futarchy
+    #[msg("You need a futarchy.")]
+    NotFutarchy,
+    /// Incorrect Instruction: Use initializeCreateFutarchyHolon
+    #[msg("Incorrect Instruction: Use initializeCreateFutarchyHolon")]
+    IncorrectInstruction
 }

@@ -39,10 +39,13 @@ pub mod holonic_futarchy {
     }
 
     /// Creates a new holon
-    pub fn create_holon(ctx: Context<CreateHolon>, holon_metadata: HolonMetadata) -> Result<()> {
-        handle_create_holon(ctx, holon_metadata)?;
+    pub fn create_futarchy_holon(ctx: Context<CreateFutarchyHolon>, holon_metadata: HolonMetadata) -> Result<()> {
+        handle_create_futarchy_holon(ctx, holon_metadata)?;
         Ok(())
     }
 
-
+    pub fn create__holon(ctx: Context<CreateHolon>, holon_metadata: HolonMetadata) -> Result<()> {
+        handle_create_holon(ctx, holon_metadata)?;
+        Ok(())
+    }
 }

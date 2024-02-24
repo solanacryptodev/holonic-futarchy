@@ -39,9 +39,9 @@ pub mod coral_multisig {
         assert_unique_owners(&owners)?;
         require!(
             threshold > 0 && threshold <= owners.len() as u64,
-            InvalidThreshold
+            ErrorCode::InvalidThreshold
         );
-        require!(!owners.is_empty(), InvalidOwnersLen);
+        require!(!owners.is_empty(), ErrorCode::InvalidOwnersLen);
 
         let multisig = &mut ctx.accounts.multisig;
         multisig.owners = owners;
@@ -99,28 +99,26 @@ pub mod coral_multisig {
     }
 
     // Set owners and threshold at once.
-    pub fn set_owners_and_change_threshold<'info>(
-        ctx: Context<'_, '_, '_, 'info, Auth<'info>>,
-        owners: Vec<Pubkey>,
-        threshold: u64,
-    ) -> Result<()> {
-        set_owners(
-            Context::new(
-                ctx.program_id,
-                ctx.accounts,
-                ctx.remaining_accounts,
-                ctx.bumps.clone(),
-            ),
-            owners,
-        )?;
-        change_threshold(ctx, threshold)
-    }
+    // pub fn set_owners_and_change_threshold<'info>(
+    //     ctx: Context<'_, '_, '_, 'info, Auth<'info>>,
+    //     owners: Vec<Pubkey>,
+    //     threshold: u64,
+    // ) -> Result<()> {
+    //     set_owners(
+    //         CpiContext::new(
+    //             ctx.program_id,
+    //             ctx.accounts,
+    //         ),
+    //         owners,
+    //     )?;
+    //     change_threshold(ctx, threshold)
+    // }
 
     // Sets the owners field on the multisig. The only way this can be invoked
     // is via a recursive call from execute_transaction -> set_owners.
     pub fn set_owners(ctx: Context<Auth>, owners: Vec<Pubkey>) -> Result<()> {
         assert_unique_owners(&owners)?;
-        require!(!owners.is_empty(), InvalidOwnersLen);
+        require!(!owners.is_empty(), ErrorCode::InvalidOwnersLen);
 
         let multisig = &mut ctx.accounts.multisig;
 
@@ -138,7 +136,7 @@ pub mod coral_multisig {
     // invoked is via a recursive call from execute_transaction ->
     // change_threshold.
     pub fn change_threshold(ctx: Context<Auth>, threshold: u64) -> Result<()> {
-        require!(threshold > 0, InvalidThreshold);
+        require!(threshold > 0, ErrorCode::InvalidThreshold);
         if threshold > ctx.accounts.multisig.owners.len() as u64 {
             return Err(ErrorCode::InvalidThreshold.into());
         }
@@ -308,7 +306,7 @@ fn assert_unique_owners(owners: &[Pubkey]) -> Result<()> {
     for (i, owner) in owners.iter().enumerate() {
         require!(
             !owners.iter().skip(i + 1).any(|item| item == owner),
-            UniqueOwners
+            ErrorCode::UniqueOwners
         )
     }
     Ok(())
