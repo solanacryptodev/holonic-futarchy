@@ -1,5 +1,4 @@
 use anchor_lang::prelude::*;
-use crate::Holarchy;
 use coral_multisig::program::CoralMultisig;
 use coral_multisig::cpi::accounts::CreateMultisig;
 use coral_multisig::cpi::create_multisig;
@@ -11,7 +10,7 @@ pub struct CreateHolarchyMultisig<'info> {
     #[account(
     init,
     payer = owner,
-    space = 8 + Holarchy::MAX_SIZE,
+    space = 8 + (10 + 32) + 8 + 4 + 1,
     seeds = [HOLARCHY_MULTISIG.as_bytes(), holarchy.key().as_ref()],
     bump
     )]

@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use coral_multisig::Multisig;
 use crate::errors::HolonicFutarchyErrors;
 
 #[account]
@@ -14,6 +15,12 @@ impl Holarchy {
     pub fn new(&mut self, multisig: Vec<Pubkey>, holarchy_metadata: HolarchyMetadata) {
         self.authority = multisig;
         self.metadata = holarchy_metadata;
+    }
+    pub fn assert_multisig(&self, multi_sig: Vec<Pubkey>) -> Result<()> {
+        if &self.authority != multi_sig {
+            return err!(HolonicFutarchyErrors::NotMultisig);
+        }
+        Ok(())
     }
 }
 
