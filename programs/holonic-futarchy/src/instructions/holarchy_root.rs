@@ -23,6 +23,7 @@ pub fn handle_initialize_root_holon(ctx: Context<HolarchyRoot>, holarchy_metadat
     let multisig = &mut ctx.accounts.multisig;
 
     holarchy.new(multisig.owners.clone(), holarchy_metadata)?;
+    holarchy.assert_multisig(multisig.owners.clone())?;
 
     Ok(())
 }
