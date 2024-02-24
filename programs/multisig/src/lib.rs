@@ -99,22 +99,20 @@ pub mod coral_multisig {
     }
 
     // Set owners and threshold at once.
-    pub fn set_owners_and_change_threshold<'info>(
-        ctx: Context<'_, '_, '_, 'info, Auth<'info>>,
-        owners: Vec<Pubkey>,
-        threshold: u64,
-    ) -> Result<()> {
-        set_owners(
-            Context::new(
-                ctx.program_id,
-                ctx.accounts,
-                ctx.remaining_accounts,
-                ctx.bumps.clone(),
-            ),
-            owners,
-        )?;
-        change_threshold(ctx, threshold)
-    }
+    // pub fn set_owners_and_change_threshold<'info>(
+    //     ctx: Context<'_, '_, '_, 'info, Auth<'info>>,
+    //     owners: Vec<Pubkey>,
+    //     threshold: u64,
+    // ) -> Result<()> {
+    //     set_owners(
+    //         CpiContext::new(
+    //             ctx.program_id,
+    //             ctx.accounts,
+    //         ),
+    //         owners,
+    //     )?;
+    //     change_threshold(ctx, threshold)
+    // }
 
     // Sets the owners field on the multisig. The only way this can be invoked
     // is via a recursive call from execute_transaction -> set_owners.
