@@ -3,13 +3,13 @@ use crate::errors::HolonicFutarchyErrors;
 
 #[account]
 pub struct Holarchy {
-    pub authority: Vec<Pubkey>,
+    pub authority: Vec<Pubkey>, // allows for up to 10 multisig owners
     pub metadata: HolarchyMetadata
 }
 
 impl Holarchy {
     pub const SEED: &'static str = "holarchy";
-    pub const MAX_SIZE: usize = 32 + (8 + 32) ; // TODO: update this
+    pub const MAX_SIZE: usize = (32 + (4 + 20)) + (4 + (10 * 32));
 
     pub fn new(&mut self, multisig: Vec<Pubkey>, holarchy_metadata: HolarchyMetadata) {
         self.authority = multisig;
@@ -24,7 +24,7 @@ pub struct Holon {
 
 impl Holon {
     pub const SEED: &'static str = "holon";
-    pub const MAX_SIZE: usize = 4; // TODO: update this
+    pub const MAX_SIZE: usize = (32 + (4 + 20)) + (4 + 20) + 32 + 1;
 
     pub fn new(&mut self, holon_metadata: HolonMetadata) {
         self.holon_metadata = holon_metadata;
@@ -40,14 +40,14 @@ impl Holon {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Default, Debug)]
 pub struct HolarchyMetadata {
-    pub name: String,
-    pub key: Pubkey,
+    pub name: String, // 4 + 20 (length of string in bytes)
+    pub key: Pubkey, // 32
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Default, Debug)]
 pub struct HolonMetadata {
-    pub name: String,
-    pub root_holon: Pubkey,
-    pub holarchy_metadata: HolarchyMetadata,
-    pub futarchy: bool
+    pub name: String, // 4 + 20 (length of string in bytes)
+    pub root_holon: Pubkey, // 32
+    pub holarchy_metadata: HolarchyMetadata, // 32 + 4 + 20
+    pub futarchy: bool // 1
 }

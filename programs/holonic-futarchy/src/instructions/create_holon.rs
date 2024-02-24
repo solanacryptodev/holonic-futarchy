@@ -24,7 +24,6 @@ pub fn handle_create_holon(ctx: Context<CreateHolon>, holon_metadata: HolonMetad
     let holarchy_key = holarchy.key();
 
     holon.new(holon_metadata)?;
-
     holon.assert_from_holarchy(&holarchy_key)?;
 
     if holon.holon_metadata.futarchy {
