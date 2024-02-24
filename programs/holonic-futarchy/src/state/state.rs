@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use anchor_spl::token::Mint;
 use coral_multisig::Multisig;
 use crate::errors::HolonicFutarchyErrors;
 
@@ -31,7 +32,7 @@ pub struct Holon {
 
 impl Holon {
     pub const SEED: &'static str = "holon";
-    pub const MAX_SIZE: usize = (32 + (4 + 20)) + (4 + 20) + 32 + 1;
+    pub const MAX_SIZE: usize = (32 + (4 + 20)) + (4 + 20) + 32 + 32 + 32 + 1;
 
     pub fn new(&mut self, holon_metadata: HolonMetadata) {
         self.holon_metadata = holon_metadata;
@@ -56,5 +57,7 @@ pub struct HolonMetadata {
     pub name: String, // 4 + 20 (length of string in bytes)
     pub root_holon: Pubkey, // 32
     pub holarchy_metadata: HolarchyMetadata, // 32 + 4 + 20
-    pub futarchy: bool // 1
+    pub futarchy: bool, // 1
+    pub usdc_mint: Pubkey, // 32
+    pub meta_mint: Pubkey, // 32
 }
