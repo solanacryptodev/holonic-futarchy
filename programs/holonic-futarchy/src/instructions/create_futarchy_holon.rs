@@ -1,9 +1,9 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::Mint;
 use crate::{Holarchy, Holon, HolonMetadata};
-use autocrat_v0::cpi::initialize_dao;
+use autocrat_v0::autocrat_v0::initialize_dao;
 use autocrat_v0::program::AutocratV0;
-use autocrat_v0::cpi::accounts::InitializeDAO;
+use autocrat_v0::accounts::InitializeDAO;
 use crate::errors::HolonicFutarchyErrors;
 
 #[derive(Accounts)]
@@ -19,7 +19,6 @@ pub struct CreateFutarchyHolon<'info> {
     pub holon: Account<'info, Holon>,
     #[account(mut)]
     pub holarchy: Account<'info, Holarchy>,
-    #[account(mut)]
     pub autocrat_program: Program<'info, AutocratV0>,
     #[account(mut, address = data.meta_mint)]
     pub meta_mint: Account<'info, Mint>,
@@ -42,19 +41,19 @@ pub fn handle_create_futarchy_holon(ctx: Context<CreateFutarchyHolon>, holon_met
 
     require!(holon_metadata.futarchy == true, HolonicFutarchyErrors::NotFutarchy);
 
-    holon.new(holon_metadata)?;
+    holon.new(holon_metadata);
     holon.assert_from_holarchy(&holarchy_key)?;
 
     let cpi_autocrat_program = autocrat_program.to_account_info();
     let cpi_accounts = InitializeDAO {
-        dao: holon.to_account_info(),
-        payer: owner.to_account_info(),
-        system_program: system_program.to_account_info(),
-        meta_mint: meta_mint.to_account_info(),
-        usdc_mint: usdc_mint.to_account_info(),
+        dao: holon.key(),
+        payer: owner.key(),
+        system_program: system_program.key(),
+        meta_mint: meta_mint.key(),
+        usdc_mint: usdc_mint.key(),
     };
     let cpi_ctx = CpiContext::new(cpi_autocrat_program, cpi_accounts);
-    initialize_dao(cpi_ctx)?;
+    //initialize_dao(cpi_ctx);
 
     Ok(())
 }

@@ -1,6 +1,4 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::Mint;
-use coral_multisig::Multisig;
 use crate::errors::HolonicFutarchyErrors;
 
 #[account]
@@ -15,10 +13,11 @@ impl Holarchy {
 
     pub fn new(&mut self, multisig: Vec<Pubkey>, holarchy_metadata: HolarchyMetadata) {
         self.authority = multisig;
-        self.metadata = holarchy_metadata;
+        self.metadata.key = holarchy_metadata.key;
+        self.metadata.name = holarchy_metadata.name;
     }
     pub fn assert_multisig(&self, multi_sig: Vec<Pubkey>) -> Result<()> {
-        if &self.authority != multi_sig {
+        if &self.authority != &multi_sig {
             return err!(HolonicFutarchyErrors::NotMultisig);
         }
         Ok(())
@@ -35,7 +34,11 @@ impl Holon {
     pub const MAX_SIZE: usize = (32 + (4 + 20)) + (4 + 20) + 32 + 32 + 32 + 1;
 
     pub fn new(&mut self, holon_metadata: HolonMetadata) {
-        self.holon_metadata = holon_metadata;
+        self.holon_metadata.root_holon = holon_metadata.root_holon;
+        self.holon_metadata.holarchy_metadata = holon_metadata.holarchy_metadata;
+        self.holon_metadata.futarchy = holon_metadata.futarchy;
+        self.holon_metadata.usdc_mint = holon_metadata.usdc_mint;
+        self.holon_metadata.meta_mint = holon_metadata.meta_mint;
     }
 
     pub fn assert_from_holarchy(&self, holarchy: &Pubkey) -> Result<()> {

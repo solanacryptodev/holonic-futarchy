@@ -15,7 +15,6 @@ pub struct CreateHolarchyMultisig<'info> {
     bump
     )]
     pub holarchy: Account<'info, Multisig>,
-    #[account(mut)]
     pub coral_multisig_program: Program<'info, CoralMultisig>,
     #[account(mut)]
     pub owner: Signer<'info>,
