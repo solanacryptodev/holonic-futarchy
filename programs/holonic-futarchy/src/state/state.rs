@@ -3,14 +3,16 @@ use crate::errors::HolonicFutarchyErrors;
 
 #[account]
 pub struct Holarchy {
+    pub authority: Vec<Pubkey>,
     pub metadata: HolarchyMetadata
 }
 
 impl Holarchy {
     pub const SEED: &'static str = "holarchy";
-    pub const MAX_SIZE: usize = 4; // TODO: update this
+    pub const MAX_SIZE: usize = 32 + (8 + 32) ; // TODO: update this
 
-    pub fn new(&mut self, holarchy_metadata: HolarchyMetadata) {
+    pub fn new(&mut self, multisig: Vec<Pubkey>, holarchy_metadata: HolarchyMetadata) {
+        self.authority = multisig;
         self.metadata = holarchy_metadata;
     }
 }

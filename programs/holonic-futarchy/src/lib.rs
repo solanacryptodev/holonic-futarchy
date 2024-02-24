@@ -4,6 +4,7 @@ use solana_security_txt::security_txt;
 pub mod instructions;
 pub mod state;
 mod errors;
+mod constants;
 
 pub use instructions::*;
 pub use crate::state::state::*;
@@ -24,6 +25,12 @@ declare_id!("C1Hdqy8NDbNWHTM8Mhy67pTzTsZbGtwKGpz33vrzReuK");
 #[program]
 pub mod holonic_futarchy {
     use super::*;
+
+    /// Creates a multisig
+    pub fn create_multisig(ctx: Context<CreateHolarchyMultisig>, owners: Vec<Pubkey>, threshold: u64, nonce: u8) -> Result<()> {
+        handle_create_holarchy_multisig(ctx, owners, threshold, nonce)?;
+        Ok(())
+    }
 
     /// Initializes the root holon
     pub fn initialize_root_holon(ctx: Context<HolarchyRoot>, holarchy_metadata: HolarchyMetadata) -> Result<()> {
