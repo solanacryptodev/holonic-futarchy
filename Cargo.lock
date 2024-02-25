@@ -560,7 +560,21 @@ version = "0.1.0"
 dependencies = [
  "anchor-lang 0.29.0",
  "anchor-spl 0.29.0",
- "conditional_vault",
+ "conditional_vault 0.1.0",
+ "openbook-twap",
+ "openbook-v2 0.1.0 (git+https://github.com/openbook-dex/openbook-v2.git)",
+ "solana-program",
+ "solana-security-txt",
+]
+
+[[package]]
+name = "autocrat_v0"
+version = "0.1.0"
+source = "git+https://github.com/metaDAOproject/futarchy.git?branch=main#d5b91dc103e23d72900817e93b450e42274469c9"
+dependencies = [
+ "anchor-lang 0.28.0",
+ "anchor-spl 0.28.0",
+ "conditional_vault 0.1.0 (git+https://github.com/metaDAOproject/futarchy.git?branch=main)",
  "openbook-twap",
  "openbook-v2 0.1.0 (git+https://github.com/openbook-dex/openbook-v2.git)",
  "solana-program",
@@ -838,6 +852,16 @@ dependencies = [
 [[package]]
 name = "conditional_vault"
 version = "0.1.0"
+dependencies = [
+ "anchor-lang 0.28.0",
+ "anchor-spl 0.28.0",
+ "solana-security-txt",
+]
+
+[[package]]
+name = "conditional_vault"
+version = "0.1.0"
+source = "git+https://github.com/metaDAOproject/futarchy.git?branch=main#d5b91dc103e23d72900817e93b450e42274469c9"
 dependencies = [
  "anchor-lang 0.28.0",
  "anchor-spl 0.28.0",
@@ -1264,7 +1288,7 @@ version = "0.1.0"
 dependencies = [
  "anchor-lang 0.29.0",
  "anchor-spl 0.29.0",
- "autocrat_v0",
+ "autocrat_v0 0.1.0 (git+https://github.com/metaDAOproject/futarchy.git?branch=main)",
  "coral-multisig",
  "solana-program",
  "solana-security-txt",

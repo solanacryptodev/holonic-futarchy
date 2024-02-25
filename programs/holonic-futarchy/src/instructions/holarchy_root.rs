@@ -15,6 +15,8 @@ pub struct HolarchyRoot<'info> {
     pub holarchy: Account<'info, Holarchy>,
     #[account(mut)]
     pub multisig: Account<'info, Multisig>,
+    #[account(mut)]
+    pub owner: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
@@ -22,7 +24,8 @@ pub fn handle_initialize_root_holon(ctx: Context<HolarchyRoot>, holarchy_metadat
     let holarchy = &mut ctx.accounts.holarchy;
     let multisig = &mut ctx.accounts.multisig;
 
-    holarchy.new(multisig.owners.clone(), holarchy_metadata)?;
+    holarchy.metadata.key = ctx.accounts.multisig.key();
+    holarchy.new(multisig.owners.clone(), holarchy_metadata);
     holarchy.assert_multisig(multisig.owners.clone())?;
 
     Ok(())

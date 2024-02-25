@@ -27,7 +27,7 @@ pub fn handle_create_holon(ctx: Context<CreateHolon>, holon_metadata: HolonMetad
 
     require!(holon_metadata.futarchy == false, HolonicFutarchyErrors::IncorrectInstruction);
 
-    holon.new(holon_metadata)?;
+    holon.new(holon_metadata);
     holon.assert_from_holarchy(&holarchy_key)?;
 
     Ok(())
